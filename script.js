@@ -17,14 +17,8 @@ function createGrid(num) {
     gridContainer.style.height = `${containerWidth}px`;
     gridContainer.innerHTML = "";
 
-    let square = num * num;
-    for (let i = 0; i < square; i++){
-        const div = document.createElement("div");
-        div.classList.add("div");
-        gridContainer.appendChild(div);
-    };
 
-    let divs = document.querySelectorAll(".div");
+
 
     function rgbContainer() {
         let rgb = 
@@ -36,13 +30,18 @@ function createGrid(num) {
     
     let rgbValues = rgbContainer();
 
-    divs.style = `background-color: rgb(${rgbValues[0]}, ${rgbValues[1]}, ${rgbValues[2]});`;
+    let square = num * num;
+    for (let i = 0; i < square; i++){
+        const div = document.createElement("div");
+        div.classList.add("div");
+        gridContainer.appendChild(div);
+    };
 
-    let rgbDisplayer = document.querySelector("#rgb-displayer");
+    let divs = document.querySelectorAll(".div");
 
-    rgbContainer();
+    let rgbDisplayerSquare = document.querySelector("#rgb-displayer-square");
 
-    rgbDisplayer.textContent = `rgb ${rgbValues[0]}, ${rgbValues[1]}, ${rgbValues[2]}`;
+    rgbDisplayerSquare.textContent = `Square: rgb ${rgbValues[0]}, ${rgbValues[1]}, ${rgbValues[2]}`;
 
     divs.forEach(div => {
         div.addEventListener("mouseover", () => {
@@ -50,6 +49,19 @@ function createGrid(num) {
         });
     });
 
+    let gridColor = document.querySelector("#grid-color");
+
+    gridColor.addEventListener("change", (event) => {
+        divs.forEach(div => {
+            div.style.backgroundColor = gridColor.value;
+        });
+    });
+
+    divs.forEach(div => {
+        div.addEventListener("mouseover", () => {
+            div.style.backgroundColor = `rgb(${rgbValues[0]}, ${rgbValues[1]}, ${rgbValues[2]})`;
+        });
+    });
 };
 
 createGrid(16);
@@ -60,5 +72,4 @@ resetButton.addEventListener("click", () => {
     createGrid();
 });
 
-//initial div rgb color not going through. maybe function calling order
-//no idea how im going to update the rgb/opacity every eventupdate
+
